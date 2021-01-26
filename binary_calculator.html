@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Binary to Decimal Converter</title>
+
+    <style>
+        body {
+          background-color: lightblue;
+        }
+
+        h1 {
+          color: white;
+          font-family: verdana;
+          font-size: 30px;
+        }
+
+        p {
+          font-family: verdana;
+          font-size: 14px;
+        }
+
+        input {
+            font-family: verdana;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+<h1>Binary to Decimal Converter</h1>
+
+<form action="javascript:submit()">
+    <p>Enter a binary number:</p>
+    <input id="binaryNumber" type="text">
+    <input type="submit" value="Submit">
+    <p id="errorText"></p>
+    <p>Decimal Equivalent:</p>
+    <input id="decimalResult" type="textbox">
+</form>
+
+<script>
+    var decimalNumber;
+    function submit() {
+        var binaryNumber = document.getElementById("binaryNumber").value;
+        for (i = 0; i < binaryNumber.length; i++) {
+            if (binaryNumber[i] != 0) {
+                if (binaryNumber[i] != 1) {
+                    document.getElementById("decimalResult").value = "";
+                    document.getElementById("errorText").innerText = "Please enter a valid binary number consisting of 0's and 1's only"
+                } else {
+                    document.getElementById("errorText").innerText = ""
+                    var reverseBinaryNumber = binaryNumber.split("").reverse();
+
+                    var tempArray = [];
+                    for (i = 0; i < reverseBinaryNumber.length; i++) {
+                        if (reverseBinaryNumber[i] === "1") {
+                            tempArray.push(2 ** Number(i));
+                        } else {
+                            tempArray.push(0);
+                        }
+                    }
+                    decimalNumber = tempArray.reduce((a, b) => a + b, 0);
+
+                    document.getElementById("decimalResult").value = decimalNumber;
+                }
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
