@@ -1,10 +1,3 @@
-<!-- BINARY TO DECIMAL CALCULATOR -->
-
-<!-- User enters a binary number and decimal equivalent is displayed-->
-<!--User must be notified if anything other than a 0 or 1 was entered-->
-<!--User views the results in a single output field containing the decimal (base 10)
-equivalent of the binary number that was entered-->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,7 +32,7 @@ equivalent of the binary number that was entered-->
 <h1>Binary to Decimal Converter</h1>
 
 <form action="javascript:submit()">
-    <p>Enter a binary number:</p>
+    <p>Enter a binary number of no more than 8 numbers:</p>
     <input id="binaryNumber" type="text">
     <input type="submit" value="Submit">
     <p id="errorText"></p>
@@ -51,26 +44,31 @@ equivalent of the binary number that was entered-->
     var decimalNumber;
     function submit() {
         var binaryNumber = document.getElementById("binaryNumber").value;
-        for (i = 0; i < binaryNumber.length; i++) {
-            if (binaryNumber[i] != 0) {
-                if (binaryNumber[i] != 1) {
-                    document.getElementById("decimalResult").value = "";
-                    document.getElementById("errorText").innerText = "Please enter a valid binary number consisting of 0's and 1's only"
-                } else {
-                    document.getElementById("errorText").innerText = ""
-                    var reverseBinaryNumber = binaryNumber.split("").reverse();
+        if (binaryNumber.length > 8) {
+            document.getElementById("decimalResult").value = "";
+            document.getElementById("errorText").innerText = "Please enter no more than 8 numbers"
+        } else {
+            for (i = 0; i < binaryNumber.length; i++) {
+                if (binaryNumber[i] != 0) {
+                    if (binaryNumber[i] != 1) {
+                        document.getElementById("decimalResult").value = "";
+                        document.getElementById("errorText").innerText = "Please enter a valid binary number consisting of 0's and 1's only"
+                    } else {
+                        document.getElementById("errorText").innerText = ""
+                        var reverseBinaryNumber = binaryNumber.split("").reverse();
 
-                    var tempArray = [];
-                    for (i = 0; i < reverseBinaryNumber.length; i++) {
-                        if (reverseBinaryNumber[i] === "1") {
-                            tempArray.push(2 ** Number(i));
-                        } else {
-                            tempArray.push(0);
+                        var tempArray = [];
+                        for (i = 0; i < reverseBinaryNumber.length; i++) {
+                            if (reverseBinaryNumber[i] === "1") {
+                                tempArray.push(2 ** Number(i));
+                            } else {
+                                tempArray.push(0);
+                            }
                         }
-                    }
-                    decimalNumber = tempArray.reduce((a, b) => a + b, 0);
+                        decimalNumber = tempArray.reduce((a, b) => a + b, 0);
 
-                    document.getElementById("decimalResult").value = decimalNumber;
+                        document.getElementById("decimalResult").value = decimalNumber;
+                    }
                 }
             }
         }
